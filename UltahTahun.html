@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun!</title>
+    <style>
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #e6f2ff, #b3d9ff);
+            color: #003366;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 51, 102, 0.2);
+            position: relative;
+            z-index: 1;
+            border: 2px solid #4da6ff;
+            transition: transform 0.8s, opacity 0.8s;
+            transform-style: preserve-3d;
+        }
+        
+        .page-exit {
+            animation: pageExit 0.8s forwards;
+        }
+        
+        .page-enter {
+            animation: pageEnter 0.8s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes pageExit {
+            0% {
+                transform: translateY(0) rotateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotateY(-90deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes pageEnter {
+            0% {
+                transform: translateY(100px) rotateY(90deg);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) rotateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .final-page-enter {
+            animation: finalPageEnter 1s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes finalPageEnter {
+            0% {
+                transform: scale(0.5) rotate(180deg);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.1) rotate(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+        
+        button {
+            background: linear-gradient(to bottom, #4da6ff, #0066cc);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 51, 102, 0.3);
+            font-weight: bold;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 51, 102, 0.4);
+            background: linear-gradient(to bottom, #66b3ff, #0073e6);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background-color: #4da6ff;
+            opacity: 0;
+            z-index: 9999;
+            animation: confetti 5s ease-in-out;
+        }
+        
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        .balloon {
+            position: fixed;
+            width: 40px;
+            height: 50px;
+            border-radius: 50%;
+            z-index: 9998;
+            animation: balloon 15s linear forwards;
+            background: radial-gradient(circle at 30% 30%, #ffffff, #4da6ff);
+            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.2);
+            bottom: -50px; /* Mulai dari bawah layar */
+            left: calc(50% - 20px);
+        }
+        
+        .balloon:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            width: 2px;
+            height: 30px;
+            background-color: #0066cc;
+            transform: translateX(-50%);
+        }
+        
+        @keyframes balloon {
+            0% {
+                transform: translateY(0) scale(0.7);
+                opacity: 1;
+            }
+            10% {
+                transform: translateY(-10vh) scale(0.8);
+            }
+            20% {
+                transform: translateY(-20vh) scale(0.9);
+            }
+            100% {
+                transform: translateY(-120vh) scale(1);
+                opacity: 0.8;
+            }
+        }
+        
+        h1 {
+            color: #0066cc;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+        
+        .birthday-text {
+            font-style: italic;
+            color: #0066cc;
+            margin: 25px 0;
+            font-size: 20px;
+        }
+        
+        .cake {
+            font-size: 40px;
+            margin: 20px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .bg-animated {
+            background: linear-gradient(270deg, #e6f2ff, #b3d9ff, #cce6ff, #99ccff);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+        }
+    </style>
+</head>
+<body class="bg-animated">
+    <div class="container" id="page1">
+        <h1>Hallo 🙋</h1>
+        <p>Pencet Button ini yuk!</p>
+        <button onclick="showMessage()">🖲</button>
+        <div class="cake">🎂</div>
+        <p class="birthday-text">Semoga harimu menyenangkan!</p>
+    </div>
+    
+    <div class="container hidden" id="page2">
+        <p class="birthday-text">Hayooo, siapa yang hari ini ulang tahun🤭</p>
+        <button onclick="nextPage()">Aku loh🤭</button>
+        <div class="cake">🎉</div>
+        <p class="birthday-text">Tahun baru, semangat baru!</p>
+    </div>
+    
+    <div class="container hidden" id="page3">
+        <h1>Hello!</h1>
+        <p class="birthday-text">Selamat ulang tahun ya!</p>
+        <p>Doa terbaik untuk kamu 😆</p>
+        <p>Semoga panjang umur, sehat selalu, dan bahagia!</p>
+        <p>Maaf aku belum bisa kasih apa apa</p>
+        <p>Dengan ini, aku mengucapkan dengan versi aku sendiri 😚</p>
+        <div class="cake">🎈</div>
+        <p class="birthday-text">Semoga semua harapan dan mimpimu terkabul!</p>
+        <button onclick="celebrate()">Lemparkan Confetti</button>
+    </div>
+    
+    <script>
+        function showMessage() {
+            const page1 = document.getElementById('page1');
+            const page2 = document.getElementById('page2');
+            
+            page1.classList.add('page-exit');
+            
+            setTimeout(() => {
+                page1.classList.add('hidden');
+                page1.classList.remove('page-exit');
+                
+                page2.classList.remove('hidden');
+                page2.classList.add('page-enter');
+                
+                setTimeout(() => {
+                    page2.classList.remove('page-enter');
+                }, 800);
+            }, 800);
+        }
+        
+        function nextPage() {
+            const page2 = document.getElementById('page2');
+            const page3 = document.getElementById('page3');
+            
+            page2.classList.add('page-exit');
+            
+            setTimeout(() => {
+                page2.classList.add('hidden');
+                page2.classList.remove('page-exit');
+                
+                page3.classList.remove('hidden');
+                page3.classList.add('final-page-enter');
+                
+                setTimeout(() => {
+                    page3.classList.remove('final-page-enter');
+                }, 1000);
+            }, 800);
+        }
+        
+        function celebrate() {
+            // Create confetti
+            for (let i = 0; i < 200; i++) {
+                createConfetti();
+            }
+            
+            // Create balloons from bottom of screen
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createBalloon(i);
+                }, i * 300); // Delay antara balon
+            }
+            
+            playSound();
+            
+            const page3 = document.getElementById('page3');
+            page3.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                page3.style.animation = '';
+            }, 500);
+        }
+        
+        function createBalloon(index) {
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            
+            // Random horizontal position
+            const xPos = Math.random() * (window.innerWidth - 40);
+            balloon.style.left = `${xPos}px`;
+            
+            // Random size
+            const size = Math.random() * 30 + 30;
+            balloon.style.width = `${size}px`;
+            balloon.style.height = `${size * 1.3}px`;
+            
+            // Random color variation
+            const hue = 200 + Math.random() * 40; // Warna biru dengan variasi
+            balloon.style.background = `radial-gradient(circle at 30% 30%, #ffffff, hsl(${hue}, 100%, 70%))`;
+            
+            // Random animation duration
+            const duration = Math.random() * 10 + 10;
+            balloon.style.animationDuration = `${duration}s`;
+            
+            document.body.appendChild(balloon);
+            
+            // Remove balloon after animation
+            setTimeout(() => {
+                balloon.remove();
+            }, duration * 1000);
+        }
+        
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            
+            const xPos = Math.random() * window.innerWidth;
+            confetti.style.left = `${xPos}px`;
+            confetti.style.top = '-10px';
+            
+            const colors = ['#4da6ff', '#0066cc', '#0080ff', '#66b3ff', '#0073e6'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.backgroundColor = randomColor;
+            
+            const size = Math.random() * 12 + 8;
+            confetti.style.width = `${size}px`;
+            confetti.style.height = `${size}px`;
+            
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            
+            const duration = Math.random() * 3 + 2;
+            confetti.style.animationDuration = `${duration}s`;
+            
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, duration * 1000);
+        }
+        
+        function playSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.type = 'triangle';
+                    oscillator.frequency.value = 300 + Math.random() * 500;
+                    gainNode.gain.value = 0.1;
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.start();
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                    oscillator.stop(audioContext.currentTime + 0.5);
+                }, i * 200);
+            }
+        }
+        
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0% { transform: translateX(0) rotate(0); }
+                20% { transform: translateX(-10px) rotate(-5deg); }
+                40% { transform: translateX(10px) rotate(5deg); }
+                60% { transform: translateX(-10px) rotate(-5deg); }
+                80% { transform: translateX(10px) rotate(5deg); }
+                100% { transform: translateX(0) rotate(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
